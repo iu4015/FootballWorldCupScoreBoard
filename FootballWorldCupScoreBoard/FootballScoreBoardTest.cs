@@ -89,5 +89,17 @@ namespace FootballWorldCupScoreBoard
                 .Message
                 .EqualTo("The awayTeam has already been playing"));
         }
+
+        [Test]
+        [Category("StartGameNoExceptions")]
+        public void StartGame_CorrectParameters_ReturnGameId()
+        {
+            string homeTeam = "England", awayTeam = "Ukraine";
+            string expected = "England-Ukraine";
+
+            string result = scoreBoard.StartGame(homeTeam, awayTeam);
+
+            Assert.AreEqual(expected, result);
+        }
     }
 }

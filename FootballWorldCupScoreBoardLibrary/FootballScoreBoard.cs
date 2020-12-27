@@ -13,7 +13,7 @@ namespace FootballWorldCupScoreBoard
             games = new Dictionary<string, Game>();
         }
 
-        public void StartGame(string homeTeam, string awayTeam)
+        public string StartGame(string homeTeam, string awayTeam)
         {
             if (games.Values.Any(g => g.HomeTeam.ToUpper() == homeTeam.ToUpper() || g.AwayTeam.ToUpper() == homeTeam.ToUpper()))
                 throw new ArgumentException("The homeTeam has already been playing");
@@ -24,6 +24,8 @@ namespace FootballWorldCupScoreBoard
             var game = new Game(homeTeam, awayTeam);
 
             games.Add(game.GameId, game);
+
+            return game.GameId;
         }
     }
 }
