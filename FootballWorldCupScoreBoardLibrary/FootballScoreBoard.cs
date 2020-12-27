@@ -27,5 +27,13 @@ namespace FootballWorldCupScoreBoard
 
             return game.GameId;
         }
+
+        public bool FinishGame(string gameId)
+        {
+            if (string.IsNullOrEmpty(gameId))
+                throw new ArgumentNullException("gameId");
+
+            return games.Remove(gameId);
+        }
     }
 }

@@ -101,5 +101,40 @@ namespace FootballWorldCupScoreBoard
 
             Assert.AreEqual(expected, result);
         }
+
+        [Test]
+        [Category("FinishGameExceptions")]
+        [TestCase("")]
+        [TestCase(null)]
+        public void FinishGame_GameIdNullOrEmpty_ThrowsArgumentNullException(string gameId)
+        {
+            string homeTeam = "England", awayTeam = "Ukraine";
+
+            scoreBoard.StartGame(homeTeam, awayTeam);
+
+            Assert.Throws<ArgumentNullException>(() => scoreBoard.FinishGame(gameId));
+        }
+
+        [Test]
+        [Category("FinishGameNoExceptions")]
+        public void FinishGame_NotExistingGameId_ReturnFalse()
+        {
+            string homeTeam = "England", awayTeam = "Ukraine", gameId = "NotExistingGameId";
+
+            scoreBoard.StartGame(homeTeam, awayTeam);
+
+            Assert.IsFalse(scoreBoard.FinishGame(gameId));
+        }
+
+        [Test]
+        [Category("FinishGameNoExceptions")]
+        public void FinishGame_ExistingGameId_ReturnTrue()
+        {
+            string homeTeam = "England", awayTeam = "Ukraine", gameId = "England-Ukraine";
+
+            scoreBoard.StartGame(homeTeam, awayTeam);
+
+            Assert.IsTrue(scoreBoard.FinishGame(gameId));
+        }
     }
 }
