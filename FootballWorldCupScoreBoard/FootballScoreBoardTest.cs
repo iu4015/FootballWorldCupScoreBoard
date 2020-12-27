@@ -45,5 +45,49 @@ namespace FootballWorldCupScoreBoard
                 .Message
                 .EqualTo("The homeTeam cannot be the same as the awayTeam"));
         }
+
+        [Test]
+        [Category("StartGameExceptions")]
+        [TestCase("Ukraine", "Canada")]
+        [TestCase("UKRAINE", "GERMANY")]
+        [TestCase("ukraine", "Italy")]
+        [TestCase("France", "Mexico")]
+        [TestCase("FRANCE", "JAPAN")]
+        [TestCase("france", "belgium")]
+        public void StartGame_ExistingHomeTeam_ThrowsArgumentException(string homeTeam, string awayTeam)
+        {
+            string homeTeam1 = "England", awayTeam1 = "Ukraine", homeTeam2 = "France", awayTeam2 = "Argentina";
+
+            scoreBoard.StartGame(homeTeam1, awayTeam1);
+            scoreBoard.StartGame(homeTeam2, awayTeam2);
+
+            Assert.That(() => scoreBoard.StartGame(homeTeam, awayTeam), Throws
+                .TypeOf<ArgumentException>()
+                .With
+                .Message
+                .EqualTo("The homeTeam has already been playing"));
+        }
+
+        [Test]
+        [Category("StartGameExceptions")]
+        [TestCase("Italy", "England")]
+        [TestCase("GERMANY", "ENGLAND")]
+        [TestCase("Canada", "england")]
+        [TestCase("Mexico", "Argentina")]
+        [TestCase("JAPAN", "ARGENTINA")]
+        [TestCase("belgium", "argentina")]
+        public void StartGame_ExistingAwayTeam_ThrowsArgumentException(string homeTeam, string awayTeam)
+        {
+            string homeTeam1 = "England", awayTeam1 = "Ukraine", homeTeam2 = "France", awayTeam2 = "Argentina";
+
+            scoreBoard.StartGame(homeTeam1, awayTeam1);
+            scoreBoard.StartGame(homeTeam2, awayTeam2);
+
+            Assert.That(() => scoreBoard.StartGame(homeTeam, awayTeam), Throws
+                .TypeOf<ArgumentException>()
+                .With
+                .Message
+                .EqualTo("The awayTeam has already been playing"));
+        }
     }
 }
