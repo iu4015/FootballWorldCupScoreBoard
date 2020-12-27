@@ -12,6 +12,9 @@ namespace FootballWorldCupScoreBoard
         {
             if (string.IsNullOrEmpty(homeTeam))
                 throw new ArgumentNullException(nameof(homeTeam));
+
+            if (string.IsNullOrEmpty(awayTeam))
+                throw new ArgumentNullException(nameof(awayTeam));
         }
     }
 }
