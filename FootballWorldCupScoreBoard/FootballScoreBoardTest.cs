@@ -7,9 +7,11 @@ namespace FootballWorldCupScoreBoard
     class FootballScoreBoardTest
     {
         [Test]
-        public void StartGame_HomeTeamNameNullOrEmpty_ThrowsArgumentNullException()
+        [Category("StartGameExceptions")]
+        [TestCase("", "Ukraine")]
+        [TestCase(null, "Ukraine")]
+        public void StartGame_HomeTeamNameNullOrEmpty_ThrowsArgumentNullException(string homeTeam, string awayTeam)
         {
-            string homeTeam = "", awayTeam = "Ukraine";
             var scoreBoard = new FootballScoreBoard();
 
             Assert.Throws<ArgumentNullException>(() => scoreBoard.StartGame(homeTeam, awayTeam));
