@@ -10,7 +10,8 @@ namespace FootballWorldCupScoreBoard
 
         public void StartGame(string homeTeam, string awayTeam)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(homeTeam))
+                throw new ArgumentNullException(nameof(homeTeam));
         }
     }
 }
