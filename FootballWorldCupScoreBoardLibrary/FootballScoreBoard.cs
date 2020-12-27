@@ -35,5 +35,16 @@ namespace FootballWorldCupScoreBoard
 
             return games.Remove(gameId);
         }
+
+        public bool UpdateScore(string gameId, int homeScore, int awayScore)
+        {
+            if (string.IsNullOrEmpty(gameId))
+                throw new ArgumentNullException("gameId");
+
+            if (games.Keys.Contains(gameId) == false)
+                throw new ArgumentException("gameId does not exist");
+
+            return games[gameId].UpdateScore(homeScore, awayScore);
+        }
     }
 }

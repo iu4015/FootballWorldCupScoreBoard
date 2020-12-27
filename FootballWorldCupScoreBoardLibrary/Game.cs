@@ -7,7 +7,9 @@ namespace FootballWorldCupScoreBoard
         public string HomeTeam { get; }
         public string AwayTeam { get; }
         public string GameId => HomeTeam + "-" + AwayTeam;
-        
+        public int HomeScore { get; private set; }
+        public int AwayScore { get; private set; }
+
         public Game(string homeTeam, string awayTeam)
         {
             if (string.IsNullOrEmpty(homeTeam))
@@ -21,6 +23,17 @@ namespace FootballWorldCupScoreBoard
 
             HomeTeam = homeTeam;
             AwayTeam = awayTeam;
+        }
+
+        internal bool UpdateScore(int homeScore, int awayScore)
+        {
+            if (homeScore < 0 || awayScore < 0)
+                return false;
+
+            HomeScore = homeScore;
+            AwayScore = awayScore;
+
+            return true;
         }
     }
 }

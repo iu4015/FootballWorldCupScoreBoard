@@ -136,5 +136,57 @@ namespace FootballWorldCupScoreBoard
 
             Assert.IsTrue(scoreBoard.FinishGame(gameId));
         }
+
+        [Test]
+        [Category("UpdateScoreExceptions")]
+        [TestCase("")]
+        [TestCase(null)]
+        public void UpdateScore_GameIdNullOrEmpty_ThrowsArgumentNullException(string gameId)
+        {
+            string homeTeam = "England", awayTeam = "Ukraine";
+
+            scoreBoard.StartGame(homeTeam, awayTeam);
+
+            Assert.Throws<ArgumentNullException>(() => scoreBoard.UpdateScore(gameId, 1, 0));
+        }
+
+        [Test]
+        [Category("UpdateScoreExceptions")]
+        public void UpdateScore_NotExistingGameId_ThrowsArgumentException()
+        {
+            string homeTeam = "England", awayTeam = "Ukraine", gameId = "NonExistingGameId";
+
+            scoreBoard.StartGame(homeTeam, awayTeam);
+
+            Assert.Throws<ArgumentException>(() => scoreBoard.UpdateScore(gameId, 1, 0));
+        }
+
+        [Test]
+        [Category("UpdateScoreNoExceptions")]
+        [TestCase(1, 0)]
+        [TestCase(0, 1)]
+        [TestCase(1, 1)]
+        public void UpdateScore_CorrectParameters_ReturnTrue(int homeScore, int awayScore)
+        {
+            string homeTeam = "England", awayTeam = "Ukraine", gameId = "England-Ukraine";
+
+            scoreBoard.StartGame(homeTeam, awayTeam);
+
+            Assert.IsTrue(scoreBoard.UpdateScore(gameId, homeScore, awayScore));
+        }
+
+        [Test]
+        [Category("UpdateScoreNoExceptions")]
+        [TestCase(-1, 0)]
+        [TestCase(0, -1)]
+        [TestCase(-1, -1)]
+        public void UpdateScore_WrongScoreValue_ReturnFalse(int homeScore, int awayScore)
+        {
+            string homeTeam = "England", awayTeam = "Ukraine", gameId = "England-Ukraine";
+
+            scoreBoard.StartGame(homeTeam, awayTeam);
+
+            Assert.IsFalse(scoreBoard.UpdateScore(gameId, homeScore, awayScore));
+        }
     }
 }
