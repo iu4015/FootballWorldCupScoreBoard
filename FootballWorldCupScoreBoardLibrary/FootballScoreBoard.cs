@@ -46,5 +46,15 @@ namespace FootballWorldCupScoreBoard
 
             return games[gameId].UpdateScore(homeScore, awayScore);
         }
+
+        public IEnumerable<Game> GetSummary()
+        {
+            var values = games.Values.ToList();
+
+            values.Sort((game1, game2) => 
+                game2.HomeScore + game2.AwayScore > game1.HomeScore + game1.AwayScore ? 1 : -1);
+
+            return values;
+        }
     }
 }

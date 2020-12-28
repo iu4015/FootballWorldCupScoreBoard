@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 
 namespace FootballWorldCupScoreBoard
 {
@@ -187,6 +188,44 @@ namespace FootballWorldCupScoreBoard
             scoreBoard.StartGame(homeTeam, awayTeam);
 
             Assert.IsFalse(scoreBoard.UpdateScore(gameId, homeScore, awayScore));
+        }
+
+        [Test]
+        [Category("GetSummaryNoExceptions")]
+        public void GetSummary_ByTotalScore()
+        {
+            var expected = new List<Game>()
+            {   new Game("Uruguay", "Italy"),
+                new Game("Spain", "Brazil"),
+                new Game("Mexico", "Canada"),
+                new Game("Argentina", "Australia"),
+                new Game("Germany", "France")
+            };
+
+            expected[0].UpdateScore(6, 6);
+            expected[1].UpdateScore(10, 2);
+            expected[2].UpdateScore(0, 5);
+            expected[3].UpdateScore(3, 1);
+            expected[4].UpdateScore(2, 2);
+
+            scoreBoard.StartGame("Mexico", "Canada");
+            scoreBoard.StartGame("Spain", "Brazil");
+            scoreBoard.StartGame("Germany", "France");
+            scoreBoard.StartGame("Uruguay", "Italy");
+            scoreBoard.StartGame("Argentina", "Australia");
+
+            scoreBoard.UpdateScore("Mexico-Canada", 0, 5);
+            scoreBoard.UpdateScore("Spain-Brazil", 10, 2);
+            scoreBoard.UpdateScore("Germany-France", 2, 2);
+            scoreBoard.UpdateScore("Uruguay-Italy", 6, 6);
+            scoreBoard.UpdateScore("Argentina-Australia", 3, 1);
+
+            var actual = scoreBoard.GetSummary();
+
+            CollectionAssert.AreEqual(expected, actual, Comparer<Game>.Create((game1, game2) =>
+                game1.GameId == game2.GameId && 
+                game1.HomeScore == game2.HomeScore && 
+                game1.AwayScore == game2.AwayScore ? 0 : 1));
         }
     }
 }
