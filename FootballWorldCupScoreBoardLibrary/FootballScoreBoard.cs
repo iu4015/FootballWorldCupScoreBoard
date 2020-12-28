@@ -4,10 +4,16 @@ using System.Linq;
 
 namespace FootballWorldCupScoreBoard
 {
-    public class FootballScoreBoard
+    /// <summary>
+    /// Represents a football scoreboard.
+    /// </summary>
+    public class FootballScoreBoard : IFootballScoreBoard
     {
         private readonly Dictionary<string, Game> games;
 
+        /// <summary>
+        /// Initialize a new instance of the FootballScoreBoard class
+        /// </summary>
         public FootballScoreBoard()
         {
             games = new Dictionary<string, Game>();
@@ -63,6 +69,15 @@ namespace FootballWorldCupScoreBoard
             return values;
         }
 
+        /// <summary>
+        /// Returns comparison of two games by total score.
+        /// </summary>
+        /// <param name="game1">The first game instance for compare.</param>
+        /// <param name="game2">The second game instance for compare.</param>
+        /// <returns>A signed number indicating the total score of the first game less or 
+        ///     bigger the total score of the second game. Value less than zero means that 
+        ///     a total score of the first game greater or equal to a total score of the second game. 
+        ///     Otherwise value is bigger than zero.</returns>
         private int DefaultComparerByTotalScore(Game game1, Game game2)
         {
             return game2.HomeScore + game2.AwayScore > game1.HomeScore + game1.AwayScore ? 1 : -1;

@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace FootballWorldCupScoreBoard
 {
@@ -136,6 +137,7 @@ namespace FootballWorldCupScoreBoard
             scoreBoard.StartGame(homeTeam, awayTeam);
 
             Assert.IsTrue(scoreBoard.FinishGame(gameId));
+            Assert.IsTrue(scoreBoard.GetSummary().Count() == 0);
         }
 
         [Test]
