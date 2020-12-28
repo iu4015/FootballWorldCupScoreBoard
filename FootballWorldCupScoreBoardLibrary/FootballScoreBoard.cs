@@ -47,14 +47,25 @@ namespace FootballWorldCupScoreBoard
             return games[gameId].UpdateScore(homeScore, awayScore);
         }
 
-        public IEnumerable<Game> GetSummary()
+        public IEnumerable<Game> GetSummary(IComparer<Game> customComparer = null)
         {
             var values = games.Values.ToList();
 
-            values.Sort((game1, game2) => 
-                game2.HomeScore + game2.AwayScore > game1.HomeScore + game1.AwayScore ? 1 : -1);
+            if (customComparer != null)
+            {
+                values.Sort(customComparer);
+            }
+            else
+            {
+                values.Sort(DefaultComparerByTotalScore);
+            }
 
             return values;
+        }
+
+        private int DefaultComparerByTotalScore(Game game1, Game game2)
+        {
+            return game2.HomeScore + game2.AwayScore > game1.HomeScore + game1.AwayScore ? 1 : -1;
         }
     }
 }
