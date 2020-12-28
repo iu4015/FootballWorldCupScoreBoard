@@ -2,7 +2,7 @@
 
 namespace FootballWorldCupScoreBoard
 {
-    internal class Game
+    public class Game
     {
         public string HomeTeam { get; }
         public string AwayTeam { get; }
@@ -25,8 +25,9 @@ namespace FootballWorldCupScoreBoard
             AwayTeam = awayTeam;
         }
 
-        internal bool UpdateScore(int homeScore, int awayScore)
+        public bool UpdateScore(int homeScore, int awayScore)
         {
+            // homeScore and awayScore cannot be less then zero
             if (homeScore < 0 || awayScore < 0)
                 return false;
 
